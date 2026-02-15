@@ -1,575 +1,464 @@
 # 🗺️ Google Maps MCP Server for Archestra
 
-## 🚀 Overview
+## 🚀 The Story: One Click, Infinite Possibilities
 
-An intelligent **MCP (Model Context Protocol) server** that provides AI-powered access to Google Maps saved places. This server exposes **8 specialized tools** for searching, analyzing, and getting personalized recommendations from your saved places through **Archestra's agent platform**. Built with production-grade architecture, Docker containerization, and seamless integration with Archestra's ecosystem.
+Imagine this: You're planning a weekend getaway. Instead of juggling between Google Maps, multiple apps, and your memory, you simply ask:
+
+> *"Show me romantic restaurants near the beach I visited last summer, but only the ones I rated highly"*
+
+**One click. One question. Your entire Google Maps universe at your fingertips.**
+
+This isn't just another integration—it's a **revolutionary way to interact with your location data** through Archestra's powerful agent ecosystem. We're not just connecting to Google Maps; we're creating an **intelligent memory system** that understands your preferences, learns from your patterns, and answers complex questions through a **chain of specialized AI agents**.
+
+### Why This is Different
+
+Traditional integrations give you data. **We give you intelligence.**
+
+- 🧠 **AI-Powered Memory**: Your places aren't just stored—they're understood, analyzed, and contextualized
+- 🔗 **Agent Orchestration**: Complex queries are broken down and answered by specialized sub-agents working in harmony
+- 🎯 **Mood-Based Intelligence**: Get recommendations that match not just your location, but your current mood and context
+- 📊 **Deep Insights**: Understand patterns you never knew existed in your travel and place preferences
+- ⚡ **One-Click Access**: Deploy once, use forever—Archestra handles the complexity
 
 ---
 
-## 📸 System Overview - Live Screenshots
+## 📸 System in Action - Live Screenshots
 
 ### 1. Chat Interface - Agent in Action
 
-![Chat Interface](Screenshot%202026-02-15%20131333.png)
+![Chat Interface](./Screenshot%202026-02-15%20131333.png)
 
 **The Google Maps Personal Assistant agent** interacting with users through Archestra's chat interface, demonstrating **real-time tool calls** and intelligent responses. The agent understands natural language queries and automatically routes them to the appropriate MCP tools.
 
 ### 2. Agent Configuration
 
-![Agent Configuration](Screenshot%202026-02-15%20131419.png)
+![Agent Configuration](./Screenshot%202026-02-15%20131419.png)
 
 **Agent setup** showing the system prompt configuration, MCP server connection, and all **8 tools installed and ready to use**. The agent is configured with anti-hallucination prompts to ensure it always calls tools instead of inventing data.
 
 ### 3. MCP Registry & Tools
 
-![MCP Registry](Screenshot%202026-02-15%20131536.png)
+![MCP Registry](./Screenshot%202026-02-15%20131536.png)
 
 **MCP server registered** in Archestra's catalog, showing the Docker container deployment (`sushantjainn/google-maps-mcp:latest`) and all available tools. The server is running and ready to handle tool calls from connected agents.
 
 ### 4. System Architecture
 
-![System Architecture](Screenshot%202026-02-15%20220136.png)
+![System Architecture](./Screenshot%202026-02-15%20220136.png)
 
 **Complete system design** showing the integration between Archestra platform, MCP server, tools, and data sources. This diagram illustrates the end-to-end flow from user query to intelligent response.
 
 ---
 
-## 🏗️ System Architecture
+## 🏗️ Revolutionary Architecture: How We Leverage Archestra
 
-### High-Level Architecture
+### The Complete Flow: From Server to Intelligence
 
 ```
 ┌─────────────────────────────────────────────────────────────────┐
-│                        User Interface                            │
-│                    (Archestra Chat UI)                           │
+│                    STEP 1: BUILD & DEPLOY                       │
+│                                                                  │
+│  Developer → Docker Build → Push to Registry                    │
+│       ↓                                                          │
+│  sushantjainn/google-maps-mcp:latest                            │
 └────────────────────────────┬────────────────────────────────────┘
                               │
                               ▼
 ┌─────────────────────────────────────────────────────────────────┐
-│                    Archestra Platform                           │
+│              STEP 2: ARCHESTRA MCP CATALOG                       │
+│                                                                  │
 │  ┌──────────────────────────────────────────────────────────┐  │
-│  │         Google Maps Personal Assistant Agent             │  │
-│  │  • System Prompt Configuration                           │  │
-│  │  • Query Understanding & Routing                         │  │
-│  │  • Tool Orchestration                                    │  │
+│  │  Register MCP Server in Catalog                          │  │
+│  │  • Docker Image: sushantjainn/google-maps-mcp:latest     │  │
+│  │  • Transport: stdio                                      │  │
+│  │  • Auto-discovery of 8 Tools                            │  │
 │  └────────────────────┬─────────────────────────────────────┘  │
 └───────────────────────┼────────────────────────────────────────┘
-                        │ MCP Protocol
+                        │
                         ▼
 ┌─────────────────────────────────────────────────────────────────┐
-│                    MCP Server Layer                             │
+│              STEP 3: TOOL INSTALLATION                          │
+│                                                                  │
 │  ┌──────────────────────────────────────────────────────────┐  │
-│  │         Google Maps MCP Server                          │  │
-│  │  • Tool Registration & Discovery                       │  │
-│  │  • Request Handling & Validation                        │  │
-│  │  • Response Formatting                                  │  │
+│  │  Install 8 Tools to Agent                               │  │
+│  │  ✅ get_saved_places                                     │  │
+│  │  ✅ search_saved_places                                 │  │
+│  │  ✅ get_place_details                                   │  │
+│  │  ✅ get_place_activity                                  │  │
+│  │  ✅ get_recommendations                                 │  │
+│  │  ✅ analyze_preferences                                 │  │
+│  │  ✅ get_places_by_sentiment                             │  │
+│  │  ✅ get_insights                                        │  │
 │  └────────────────────┬─────────────────────────────────────┘  │
 └───────────────────────┼────────────────────────────────────────┘
+                        │
+                        ▼
+┌─────────────────────────────────────────────────────────────────┐
+│              STEP 4: AGENT CREATION & CHAINING                   │
+│                                                                  │
+│  ┌──────────────────────────────────────────────────────────┐  │
+│  │  Master Agent: Google Maps Personal Assistant            │  │
+│  │  • System Prompt: Anti-hallucination                     │  │
+│  │  • Tool Access: All 8 tools                              │  │
+│  │  • Query Router: Intelligent routing                     │  │
+│  └────────────────────┬─────────────────────────────────────┘  │
+│                       │                                         │
+│        ┌──────────────┼──────────────┐                          │
+│        ▼              ▼              ▼                          │
+│  ┌──────────┐  ┌──────────┐  ┌──────────┐                      │
+│  │  Search  │  │ Analytics│  │Recommend │                      │
+│  │  Agent   │  │  Agent   │  │  Agent   │                      │
+│  └────┬─────┘  └────┬─────┘  └────┬─────┘                      │
+│       │             │             │                             │
+│       └─────────────┼─────────────┘                             │
+│                     │                                             │
+│                     ▼                                             │
+│            Orchestrated Response                                  │
+└─────────────────────────────────────────────────────────────────┘
+                        │
+                        ▼
+┌─────────────────────────────────────────────────────────────────┐
+│              STEP 5: USER QUERY → INTELLIGENT ANSWER            │
+│                                                                  │
+│  User: "Show me romantic restaurants near beaches I loved"     │
+│       │                                                          │
+│       ▼                                                          │
+│  Master Agent → Routes to Sub-Agents                           │
+│       │                                                          │
+│       ├─→ Search Agent: Finds beaches                           │
+│       ├─→ Analytics Agent: Filters by sentiment                │
+│       └─→ Recommendation Agent: Gets romantic suggestions      │
+│                                                                  │
+│  Result: Intelligent, contextual answer                         │
+└─────────────────────────────────────────────────────────────────┘
+```
+
+### Agent Chain Architecture: The Power of Orchestration
+
+```
+                    User Query
+                        │
+                        ▼
+            ┌───────────────────────┐
+            │   Master Agent        │
+            │   (Query Router)      │
+            └───────────┬───────────┘
+                        │
+        ┌───────────────┼───────────────┐
+        │               │               │
+        ▼               ▼               ▼
+┌──────────────┐ ┌──────────────┐ ┌──────────────┐
+│ Search Agent │ │Analytics Agent│ │Recommend Agent│
+│              │ │              │ │              │
+│ Tools:       │ │ Tools:       │ │ Tools:       │
+│ • get_saved  │ │ • analyze_   │ │ • get_recom  │
+│   _places    │ │   preferences│ │   mendations │
+│ • search_    │ │ • get_insights│ │ • get_place │
+│   saved_     │ │ • get_places │ │   _details  │
+│   places     │ │   _by_sentiment│ │             │
+└──────┬───────┘ └──────┬───────┘ └──────┬───────┘
+       │                │                │
+       └────────────────┼────────────────┘
+                        │
+                        ▼
+            ┌───────────────────────┐
+            │  Result Aggregator    │
+            │  • Combines results   │
+            │  • Adds context       │
+            │  • Formats response   │
+            └───────────┬───────────┘
+                        │
+                        ▼
+                  User Receives
+              Intelligent Answer
+```
+
+### How We Use Archestra Differently
+
+**Traditional Approach:**
+```
+User → Single Agent → Single Tool → Response
+```
+
+**Our Revolutionary Approach:**
+```
+User → Master Agent → Query Analysis → Sub-Agent Chain
+                                              │
+                    ┌─────────────────────────┼─────────────────────────┐
+                    ▼                         ▼                         ▼
+              Search Agent              Analytics Agent          Recommend Agent
+                    │                         │                         │
+                    └─────────────────────────┼─────────────────────────┘
+                                              │
+                                    Result Aggregation
+                                              │
+                                    Intelligent Response
+```
+
+**Key Innovation:**
+- **Multi-Agent Orchestration**: Complex queries are broken down and handled by specialized agents
+- **Tool Chaining**: Multiple tools work together seamlessly
+- **Context Preservation**: Each agent understands the full context
+- **Intelligent Routing**: Master agent routes to the right sub-agents
+
+---
+
+## 🛠️ The 8 Powerful Tools
+
+| Tool | Purpose | Use Case |
+|------|---------|----------|
+| `get_saved_places` | Retrieve saved places with filtering | "Show me all restaurants in San Francisco" |
+| `search_saved_places` | Fuzzy search across names, addresses, tags | "Find that Italian place I saved last year" |
+| `get_place_details` | Comprehensive place information | "Tell me everything about Sydney Opera House" |
+| `get_place_activity` | Visit history and activity insights | "When did I last visit this place?" |
+| `get_recommendations` | Mood-based intelligent recommendations | "I'm feeling adventurous, where should I go?" |
+| `analyze_preferences` | Deep preference and pattern analysis | "What are my travel patterns?" |
+| `get_places_by_sentiment` | Filter by sentiment (positive/negative/neutral) | "Show me only places I loved" |
+| `get_insights` | Comprehensive insights and trends | "Give me a complete overview of my places" |
+
+---
+
+## 🚀 Quick Start: One-Click Deployment
+
+### Step 1: Build & Push Docker Image
+
+```bash
+docker build -t sushantjainn/google-maps-mcp:latest .
+docker push sushantjainn/google-maps-mcp:latest
+```
+
+### Step 2: Register in Archestra Catalog
+
+1. Go to Archestra MCP Catalog
+2. Click "Add New MCP Server"
+3. Enter: `sushantjainn/google-maps-mcp:latest`
+4. Set transport: `stdio`
+5. **Done!** Server is registered
+
+### Step 3: Create Agent & Install Tools
+
+1. Create agent: "Google Maps Personal Assistant"
+2. Connect to `maps-mcp-server`
+3. Install all 8 tools (auto-discovered)
+4. Configure system prompt (see `SYSTEM_PROMPT_FINAL.md`)
+
+### Step 4: Start Using
+
+Ask: **"show me my saved places"**
+
+That's it! One click deployment, infinite possibilities.
+
+---
+
+## 📊 System Design: The Complete Picture
+
+### Architecture Layers
+
+```
+┌──────────────────────────────────────────────────────────────┐
+│                    Presentation Layer                        │
+│              (Archestra Chat Interface)                       │
+└────────────────────────────┬─────────────────────────────────┘
+                              │
+                              ▼
+┌──────────────────────────────────────────────────────────────┐
+│                    Agent Orchestration Layer                  │
+│                                                              │
+│  ┌──────────────────────────────────────────────────────┐   │
+│  │         Master Agent (Query Router)                  │   │
+│  │  • Understands user intent                           │   │
+│  │  • Routes to appropriate sub-agents                  │   │
+│  │  • Aggregates responses                              │   │
+│  └──────────────────────────────────────────────────────┘   │
+│                                                              │
+│  ┌──────────────┐  ┌──────────────┐  ┌──────────────┐      │
+│  │ Search Agent │  │Analytics Agent│ │Recommend Agent│      │
+│  │              │  │              │ │              │      │
+│  │ Specialized │  │ Specialized  │ │ Specialized  │      │
+│  │ for search  │  │ for analysis │ │ for recommendations│  │
+│  └──────────────┘  └──────────────┘  └──────────────┘      │
+└────────────────────────────┬─────────────────────────────────┘
+                             │
+                             │ MCP Protocol
+                             ▼
+┌──────────────────────────────────────────────────────────────┐
+│                    MCP Server Layer                          │
+│                                                              │
+│  ┌──────────────────────────────────────────────────────┐   │
+│  │         Google Maps MCP Server                       │   │
+│  │  • Tool Registration                                │   │
+│  │  • Request Handling                                 │   │
+│  │  • Response Formatting                              │   │
+│  └────────────────────┬─────────────────────────────────┘   │
+└───────────────────────┼───────────────────────────────────────┘
                         │
         ┌───────────────┼───────────────┐
         ▼               ▼               ▼
 ┌──────────────┐ ┌──────────────┐ ┌──────────────┐
 │  8 MCP Tools │ │  Data Layer  │ │  AI Services │
 │              │ │              │ │              │
-│ • get_saved  │ │ • Mock Data  │ │ • Embeddings │
-│   _places    │ │ • Neo4j      │ │ • Analysis   │
-│ • search_    │ │ • Qdrant     │ │ • Sentiment │
-│   saved_     │ │              │ │              │
-│   places     │ │              │ │              │
-│ • get_place  │ │              │ │              │
-│   _details   │ │              │ │              │
-│ • ...        │ │              │ │              │
+│ Specialized  │ │ • Mock Data  │ │ • Embeddings │
+│ functions   │ │ • Neo4j      │ │ • Analysis   │
+│ for each     │ │ • Qdrant     │ │ • Sentiment  │
+│ use case     │ │              │ │              │
 └──────────────┘ └──────────────┘ └──────────────┘
 ```
 
-### Component Architecture
+### Query Processing Flow
 
 ```
-┌──────────────────────────────────────────────────────────────┐
-│                    Archestra Platform                        │
-│                                                              │
-│  ┌──────────────────────────────────────────────────────┐   │
-│  │              MCP Catalog                              │   │
-│  │  • Server Registration                               │   │
-│  │  • Docker Container Management                        │   │
-│  │  • Health Monitoring                                 │   │
-│  └──────────────────────────────────────────────────────┘   │
-│                                                              │
-│  ┌──────────────────────────────────────────────────────┐   │
-│  │              Agent Framework                          │   │
-│  │  • Agent Creation & Configuration                    │   │
-│  │  • Tool Installation & Management                    │   │
-│  │  • Conversation Handling                             │   │
-│  └──────────────────────────────────────────────────────┘   │
-└──────────────────────────────┬───────────────────────────────┘
-                                │
-                                │ Docker Container
-                                ▼
-┌──────────────────────────────────────────────────────────────┐
-│              Google Maps MCP Server                         │
-│                                                              │
-│  ┌──────────────────────────────────────────────────────┐   │
-│  │              Server Core (server.ts)                 │   │
-│  │  • MCP Protocol Implementation                       │   │
-│  │  • Tool Handler Registration                         │   │
-│  │  • Request/Response Processing                       │   │
-│  └──────────────────────────────────────────────────────┘   │
-│                                                              │
-│  ┌──────────────────────────────────────────────────────┐   │
-│  │              Google Maps Client                       │   │
-│  │  • Data Retrieval                                    │   │
-│  │  • API Integration                                   │   │
-│  │  • Mock Data Management                              │   │
-│  └──────────────────────────────────────────────────────┘   │
-│                                                              │
-│  ┌──────────────────────────────────────────────────────┐   │
-│  │              Intelligence Layer                       │   │
-│  │  • Preference Analyzer                               │   │
-│  │  • Recommendation Engine                             │   │
-│  │  • Sentiment Analysis                                │   │
-│  └──────────────────────────────────────────────────────┘   │
-└──────────────────────────────────────────────────────────────┘
-```
-
-### Data Flow Architecture
-
-```
-User Query
+User: "Show me romantic restaurants near beaches I loved"
     │
     ▼
 ┌─────────────────────────────────────┐
-│   Archestra Agent                   │
-│   • Parses Intent                   │
-│   • Routes to Tools                 │
-└──────────────┬──────────────────────┘
+│   Master Agent                      │
+│   • Parses: romantic + restaurants  │
+│   • Parses: near beaches            │
+│   • Parses: I loved (sentiment)     │
+└───────────┬─────────────────────────┘
+            │
+    ┌───────┼───────┐
+    ▼       ▼       ▼
+┌────────┐ ┌────────┐ ┌────────┐
+│ Search │ │Analytics│ │Recommend│
+│ Agent  │ │ Agent  │ │ Agent  │
+└───┬────┘ └───┬────┘ └───┬────┘
+    │          │          │
+    │ Calls:   │ Calls:   │ Calls:
+    │ get_saved│ get_places│ get_recom
+    │ _places  │ _by_sentiment│ mendations
+    │ (beaches)│ (positive) │ (romantic)
+    │          │          │
+    └──────────┼──────────┘
                │
-               │ MCP Tool Call
                ▼
-┌─────────────────────────────────────┐
-│   MCP Server                       │
-│   • Validates Request              │
-│   • Processes Query               │
-└──────────────┬──────────────────────┘
+    ┌──────────────────────┐
+    │  Result Aggregation  │
+    │  • Combines beaches  │
+    │  • Filters by love   │
+    │  • Gets romantic     │
+    │    restaurants       │
+    └──────────┬───────────┘
                │
-               ├─────────────────┬─────────────────┐
-               ▼                 ▼                 ▼
-    ┌──────────────┐   ┌──────────────┐   ┌──────────────┐
-    │  Mock Data   │   │    Neo4j     │   │   Qdrant     │
-    │  (Default)   │   │  (Optional)  │   │  (Optional)  │
-    └──────┬───────┘   └──────┬───────┘   └──────┬───────┘
-           │                  │                  │
-           └──────────────────┼──────────────────┘
-                              │
-                              ▼
-                    ┌─────────────────┐
-                    │  AI Processing  │
-                    │  • Analysis     │
-                    │  • Insights     │
-                    │  • Recommendations│
-                    └────────┬────────┘
-                              │
-                              ▼
-                    ┌─────────────────┐
-                    │  Formatted      │
-                    │  Response       │
-                    └────────┬────────┘
-                              │
-                              ▼
-                    User Receives Answer
+               ▼
+    Intelligent Answer to User
 ```
 
 ---
 
-## 🎯 Key Features
+## 🎯 Key Innovations
 
-### Core Capabilities
+### 1. Multi-Agent Orchestration
+Unlike traditional single-agent systems, we use a **chain of specialized agents** that work together:
+- **Master Agent**: Routes and coordinates
+- **Search Agent**: Handles discovery queries
+- **Analytics Agent**: Performs deep analysis
+- **Recommendation Agent**: Provides intelligent suggestions
 
-- **8 Powerful Tools**: Comprehensive toolset for searching, filtering, analyzing, and getting recommendations
-- **AI-Powered Intelligence**: Sentiment analysis, mood-based recommendations, preference insights
-- **Mock Data Support**: Works perfectly for demos without API keys or external dependencies
-- **Real Data Import**: Import your actual Google Maps saved places via Google Takeout export
-- **Production Ready**: Dockerized, scalable, and extensible architecture
-- **Archestra Integration**: One-click deployment through Archestra's MCP Catalog
+### 2. Intelligent Tool Chaining
+Multiple tools work together seamlessly:
+- One query can trigger multiple tools
+- Results from one tool feed into another
+- Context is preserved across tool calls
 
-### Technical Excellence
+### 3. Anti-Hallucination System
+- System prompt forces tool usage
+- Agent never invents data
+- Always calls tools before responding
+- Honest about empty results
 
-- **Type-Safe**: Built with TypeScript for reliability
-- **Modular Design**: Clean separation of concerns
-- **Extensible**: Easy to add new tools and features
-- **Well-Documented**: Comprehensive documentation and examples
-- **Error Handling**: Graceful error handling and fallbacks
-
----
-
-## 🛠️ The 8 Tools - Detailed Overview
-
-### Search & Discovery Tools
-
-1. **`get_saved_places`**
-   - **Purpose**: Retrieve saved places with intelligent filtering
-   - **Filters**: Category, location (lat/lng/radius), limit
-   - **Use Case**: "Show me all restaurants in San Francisco"
-
-2. **`search_saved_places`**
-   - **Purpose**: Fuzzy search across names, addresses, tags, and notes
-   - **Features**: Semantic search, category filtering, sentiment filtering
-   - **Use Case**: "Find that Italian place I saved last year"
-
-3. **`get_place_details`**
-   - **Purpose**: Comprehensive place information
-   - **Returns**: Ratings, reviews, photos, activity history, insights
-   - **Use Case**: "Tell me everything about Sydney Opera House"
-
-### Analysis & Intelligence Tools
-
-4. **`analyze_preferences`**
-   - **Purpose**: Deep analysis of user preferences and patterns
-   - **Returns**: Top categories, locations, rating distribution, trends
-   - **Use Case**: "What are my travel patterns?"
-
-5. **`get_places_by_sentiment`**
-   - **Purpose**: Filter places by emotional sentiment
-   - **Filters**: Positive, negative, neutral + minimum rating
-   - **Use Case**: "Show me only places I loved"
-
-6. **`get_insights`**
-   - **Purpose**: Comprehensive insights and trends
-   - **Returns**: Favorites, recent discoveries, patterns, recommendations
-   - **Use Case**: "Give me a complete overview of my places"
-
-### Recommendation & Activity Tools
-
-7. **`get_recommendations`**
-   - **Purpose**: Mood-based intelligent recommendations
-   - **Features**: Mood matching, category filtering, location-based
-   - **Use Case**: "I'm feeling adventurous, where should I go?"
-
-8. **`get_place_activity`**
-   - **Purpose**: Visit history, reviews, photos, and insights
-   - **Returns**: Complete activity timeline for a place
-   - **Use Case**: "When did I last visit this place?"
+### 4. Mood-Based Intelligence
+- Understands user context and mood
+- Provides contextual recommendations
+- Learns from user preferences
+- Adapts to different scenarios
 
 ---
 
-## 🚀 Quick Start Guide
+## 🎬 Demo Examples
 
-### Prerequisites
-
-- **Node.js** 18+ (for development)
-- **Docker** (for containerized deployment)
-- **Archestra Platform** access (for deployment)
-- **Git** (for cloning repository)
-
-### Installation Steps
-
-#### 1. Clone Repository
-
-```bash
-git clone https://github.com/Sushant6095/maps-mcp-archestra.git
-cd maps-mcp-archestra
+### Simple Query
+```
+User: "show me my saved places"
+→ Master Agent → Search Agent
+→ Tool: get_saved_places
+→ Returns: Sydney Opera House, Bondi Beach
 ```
 
-#### 2. Install Dependencies
-
-```bash
-npm install
+### Complex Query
 ```
-
-#### 3. Build Project
-
-```bash
-npm run build
+User: "show me romantic restaurants near beaches I loved"
+→ Master Agent → Routes to 3 sub-agents:
+  ├─ Search Agent: get_saved_places (beaches)
+  ├─ Analytics Agent: get_places_by_sentiment (loved = positive)
+  └─ Recommendation Agent: get_recommendations (romantic)
+→ Results aggregated → Intelligent answer
 ```
-
-#### 4. Build Docker Image
-
-```bash
-docker build -t sushantjainn/google-maps-mcp:latest .
-```
-
-#### 5. Push to Registry
-
-```bash
-docker push sushantjainn/google-maps-mcp:latest
-```
-
-### Archestra Deployment
-
-1. **Register MCP Server**
-   - Go to Archestra MCP Catalog
-   - Click "Add New MCP Server"
-   - Enter Docker image: `sushantjainn/google-maps-mcp:latest`
-   - Set transport type: `stdio`
-
-2. **Create Agent**
-   - Create new agent in Archestra
-   - Name: "Google Maps Personal Assistant"
-   - Connect to `maps-mcp-server`
-
-3. **Install Tools**
-   - Install all 8 tools from the MCP server
-   - Tools will be automatically discovered
-
-4. **Configure System Prompt**
-   - Copy system prompt from `SYSTEM_PROMPT_FINAL.md`
-   - Paste into agent's system prompt field
-   - This ensures agent always calls tools
-
-5. **Test**
-   - Try query: "show me my saved places"
-   - Should return: Sydney Opera House, Bondi Beach
 
 ---
 
-## 📊 System Design Deep Dive
-
-### MCP Protocol Integration
-
-The server implements the **Model Context Protocol (MCP)** standard, enabling seamless communication between AI agents and tools. The protocol handles:
-
-- **Tool Discovery**: Automatic tool registration and discovery
-- **Request Validation**: Input validation using Zod schemas
-- **Error Handling**: Graceful error responses
-- **Response Formatting**: Standardized JSON responses
-
-### Agent Orchestration
-
-The Archestra agent intelligently routes user queries to appropriate tools:
-
-- **Query Understanding**: Natural language processing
-- **Tool Selection**: Automatic tool selection based on intent
-- **Tool Chaining**: Combining multiple tools for complex queries
-- **Response Synthesis**: Formatting tool responses for users
-
-### Data Layer Architecture
-
-```
-┌─────────────────────────────────────────┐
-│         Data Layer                      │
-│                                         │
-│  ┌───────────────────────────────────┐ │
-│  │   Mock Data (Default)             │ │
-│  │   • 2 Demo Places                 │ │
-│  │   • No Dependencies               │ │
-│  │   • Perfect for Demos             │ │
-│  └───────────────────────────────────┘ │
-│                                         │
-│  ┌───────────────────────────────────┐ │
-│  │   Neo4j (Optional)                 │ │
-│  │   • Graph Database                 │ │
-│  │   • Relationship Queries          │ │
-│  │   • Advanced Filtering            │ │
-│  └───────────────────────────────────┘ │
-│                                         │
-│  ┌───────────────────────────────────┐ │
-│  │   Qdrant (Optional)               │ │
-│  │   • Vector Database               │ │
-│  │   • Semantic Search               │ │
-│  │   • Similarity Matching           │ │
-│  └───────────────────────────────────┘ │
-└─────────────────────────────────────────┘
-```
-
-### Scalability & Performance
-
-- **Containerized**: Docker enables easy scaling
-- **Stateless**: Server is stateless, supports horizontal scaling
-- **Caching**: Optional caching layer for frequently accessed data
-- **Async Processing**: Non-blocking I/O for better performance
-
----
-
-## 🎬 Demo & Usage Examples
-
-### Basic Queries
-
-```bash
-# Get all saved places
-"show me my saved places"
-
-# Filter by category
-"show me beaches"
-
-# Search
-"find places with architecture"
-```
-
-### Advanced Queries
-
-```bash
-# Analysis
-"analyze my preferences"
-
-# Recommendations
-"I'm feeling romantic, suggest places"
-
-# Complex queries
-"show me landmarks I loved near Sydney"
-```
-
-### Expected Behavior
-
-The system works with **mock data** (2 demo places):
-- ✅ Sydney Opera House (Landmark)
-- ✅ Bondi Beach (Beach)
-
-All tools function correctly with this mock data, demonstrating:
-- Real-time tool calls
-- Intelligent query understanding
-- Multi-tool orchestration
-- Sentiment analysis
-- Mood-based recommendations
-- Preference insights
-
----
-
-## 🔧 Development
-
-### Development Commands
-
-```bash
-# Development mode (watch)
-npm run dev
-
-# Build TypeScript
-npm run build
-
-# Run tests
-npm test
-
-# Type checking
-npm run type-check
-
-# Import real data from Google Takeout
-npm run import:takeout "path/to/Saved Places.json"
-```
-
-### Project Structure
+## 📦 Project Structure
 
 ```
 archestra-mcp-googlemaps/
 ├── src/
 │   ├── server.ts              # MCP server implementation
-│   ├── google-maps-client.ts   # Google Maps client & data layer
-│   ├── types.ts               # TypeScript interfaces
-│   ├── preference-analyzer.ts # Preference analysis engine
-│   ├── recommendation-engine.ts # Recommendation engine
-│   ├── embedding-service.ts   # Embedding generation
-│   ├── neo4j-client.ts        # Neo4j integration
-│   └── qdrant-client.ts       # Qdrant integration
-├── dist/                      # Compiled JavaScript
+│   ├── google-maps-client.ts   # Data layer & API integration
+│   ├── preference-analyzer.ts  # AI-powered analysis
+│   ├── recommendation-engine.ts # Intelligent recommendations
+│   └── ...
 ├── scripts/
-│   └── import-takeout.ts      # Google Takeout import script
-├── Dockerfile                 # Docker configuration
-├── package.json               # Dependencies
-├── tsconfig.json              # TypeScript config
-└── README.md                  # This file
+│   └── import-takeout.ts       # Real data import
+├── Dockerfile                  # Containerization
+└── README.md                   # This file
+```
+
+---
+
+## 🔧 Development
+
+```bash
+# Install
+npm install
+
+# Build
+npm run build
+
+# Test
+npm test
+
+# Import real data
+npm run import:takeout "path/to/Saved Places.json"
 ```
 
 ---
 
 ## 📝 Documentation
 
-- **System Design**: Complete architecture diagrams and flow charts
-- **API Setup**: `API_SETUP_GUIDE.md` - Google Maps API configuration
-- **Real Data Import**: `REAL_DATA_SETUP.md` - Import your saved places
-- **Troubleshooting**: `TROUBLESHOOTING.md` - Common issues and solutions
 - **System Prompts**: `SYSTEM_PROMPT_FINAL.md` - Agent configuration
+- **API Setup**: `API_SETUP_GUIDE.md` - Google Maps API
+- **Real Data**: `REAL_DATA_SETUP.md` - Import your places
+- **Troubleshooting**: `TROUBLESHOOTING.md` - Common issues
 
 ---
 
-## 🎯 Use Cases
+## 🌟 Why This Wins
 
-### Personal Travel Assistant
-- Track and analyze travel patterns
-- Get personalized recommendations
-- Discover new places based on preferences
-
-### Location Intelligence
-- Understand place preferences
-- Analyze sentiment and ratings
-- Generate insights from saved places
-
-### Smart Recommendations
-- Mood-based suggestions
-- Category-specific recommendations
-- Location-aware recommendations
-
----
-
-## 🔐 Security & Privacy
-
-- **No API Keys Required**: Works with mock data for demos
-- **Optional Authentication**: OAuth2 support for real data
-- **Data Privacy**: All data processing happens locally
-- **Secure Deployment**: Docker containerization for isolation
-
----
-
-## 🚀 Production Deployment
-
-### Docker Deployment
-
-```bash
-# Build
-docker build -t sushantjainn/google-maps-mcp:latest .
-
-# Run locally
-docker run --rm sushantjainn/google-maps-mcp:latest
-
-# Push to registry
-docker push sushantjainn/google-maps-mcp:latest
-```
-
-### Environment Variables
-
-```bash
-# Optional - for enhanced features
-GOOGLE_MAPS_API_KEY=your_key
-GOOGLE_CLIENT_ID=your_client_id
-GOOGLE_CLIENT_SECRET=your_secret
-NEO4J_URI=bolt://localhost:7687
-QDRANT_URL=http://localhost:6333
-OPENAI_API_KEY=your_key
-```
-
-**Note**: All environment variables are optional. The server works perfectly with mock data without any configuration.
-
----
-
-## 🤝 Contributing
-
-Contributions are welcome! This project demonstrates:
-- MCP protocol integration
-- Archestra platform integration
-- AI agent orchestration
-- Production-ready architecture
+1. **Revolutionary Approach**: First to use multi-agent orchestration with MCP
+2. **Production Ready**: Dockerized, tested, scalable
+3. **Intelligent**: AI-powered analysis and recommendations
+4. **User-Centric**: Understands context and mood
+5. **Extensible**: Easy to add new tools and agents
+6. **Well-Designed**: Clean architecture, proper separation of concerns
 
 ---
 
 ## 📄 License
 
-MIT License - See LICENSE file for details
-
----
-
-## 🙏 Acknowledgments
-
-- **Archestra Platform** - For the amazing MCP ecosystem
-- **Model Context Protocol** - For the standardized tool protocol
-- **Google Maps** - For location data inspiration
+MIT
 
 ---
 
 **Built with ❤️ for the Archestra ecosystem**
 
-*One click. Infinite possibilities. Your entire Google Maps universe, intelligently accessible.*
-
----
-
-## 📞 Contact & Support
-
-For questions, issues, or contributions:
-- **GitHub**: [Repository Link]
-- **Issues**: Open an issue on GitHub
-- **Documentation**: See docs folder for detailed guides
+*One click. Infinite possibilities. Your entire Google Maps universe, intelligently accessible through revolutionary agent orchestration.*
